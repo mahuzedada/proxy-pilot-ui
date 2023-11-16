@@ -1,8 +1,4 @@
-interface SSLCertificate {
-  id: string;
-  domainName: string;
-  expiryDate: string;
-}
+import { SSLCertificate } from '../../models';
 
 interface SSLExpiryAlertSectionProps {
   certificates: SSLCertificate[];
@@ -32,7 +28,7 @@ function CertificateItem({ certificate }: { certificate: SSLCertificate }) {
     <li className="py-3 flex justify-between items-center">
       <div>
         <p className="text-sm font-medium text-gray-900">
-          {certificate.domainName}
+          {certificate.domain}
         </p>
         <p className="text-sm text-red-500">
           Expires on: {certificate.expiryDate}

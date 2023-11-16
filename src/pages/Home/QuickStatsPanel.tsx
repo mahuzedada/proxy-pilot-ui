@@ -1,19 +1,25 @@
 interface QuickStatsPanelProps {
   totalDomains?: number;
-  activeCertificates?: number;
-  pendingRequests?: number;
+  activeCertificateCount?: number;
+  inactiveCertificateCount?: number;
 }
 
 function QuickStatsPanel({
   totalDomains = 0,
-  activeCertificates = 0,
-  pendingRequests = 0,
+  activeCertificateCount = 0,
+  inactiveCertificateCount = 0,
 }: QuickStatsPanelProps) {
   return (
     <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-4 my-4">
       <StatItem label="Total Domains" value={totalDomains || 0} />
-      <StatItem label="Active Certificates" value={activeCertificates || 0} />
-      <StatItem label="Pending Requests" value={pendingRequests || 0} />
+      <StatItem
+        label="Active Certificates"
+        value={activeCertificateCount || 0}
+      />
+      <StatItem
+        label="Inactive Certificates"
+        value={inactiveCertificateCount || 0}
+      />
     </div>
   );
 }

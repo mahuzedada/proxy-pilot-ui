@@ -1,12 +1,7 @@
-interface Activity {
-  id: string;
-  domainName: string;
-  status: string;
-  date: string;
-}
+import { SSLCertificate } from '../../models';
 
 interface RecentActivitySectionProps {
-  activities: Activity[];
+  activities: SSLCertificate[];
 }
 
 function RecentActivitySection({ activities }: RecentActivitySectionProps) {
@@ -26,17 +21,15 @@ function RecentActivitySection({ activities }: RecentActivitySectionProps) {
   );
 }
 
-function ActivityItem({ activity }: { activity: Activity }) {
+function ActivityItem({ activity }: { activity: SSLCertificate }) {
   return (
     <li className="py-3 flex justify-between items-center">
       <div>
-        <p className="text-sm font-medium text-gray-900">
-          {activity.domainName}
-        </p>
-        <p className="text-sm text-gray-500">{activity.status}</p>
+        <p className="text-sm font-medium text-gray-900">{activity.domain}</p>
+        <p className="text-sm text-gray-500">{activity.certificateStatus}</p>
       </div>
       <div>
-        <p className="text-sm text-gray-400">{activity.date}</p>
+        <p className="text-sm text-gray-400">{activity.expiryDate}</p>
       </div>
     </li>
   );

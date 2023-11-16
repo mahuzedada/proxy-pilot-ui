@@ -1,62 +1,41 @@
-import { useState, useEffect } from 'react';
-
-interface SSLCertificate {
-  id: string;
-  domainName: string;
-  status: string;
-  targetDomain: string;
-  issuedDate: string;
-  expiryDate: string;
-}
+import dayjs from 'dayjs';
+import { SSLCertificate } from '../models';
+import useCertificates from '../hooks/useCertificates';
 
 function SSLCertificates() {
-  const [certificates, setCertificates] = useState<SSLCertificate[]>([]);
+  const certificates = useCertificates();
 
-  useEffect(() => {
-    const fetchCertificates = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      const mockData: SSLCertificate[] = [
-        {
-          id: '1',
-          domainName: 'example.com',
-          targetDomain: 'target.sample.net',
-          status: 'Active',
-          issuedDate: '2021-01-01',
-          expiryDate: '2022-01-01',
-        },
-        {
-          id: '2',
-          domainName: 'sample.net',
-          targetDomain: 'target.sample.net',
-          status: 'Pending',
-          issuedDate: '2022-06-15',
-          expiryDate: '2023-06-15',
-        },
-        // Add more mock certificates as needed
-      ];
-
-      setCertificates(mockData);
-    };
-
-    fetchCertificates();
-  }, []);
+  const activeCertificates = certificates.filter(
+    (cert) => cert.certificateStatus === 'active'
+  );
+  const inactiveCertificates = certificates.filter(
+    (cert) => cert.certificateStatus !== 'active'
+  );
 
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-xl font-semibold mb-4">SSL Certificates</h2>
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        {certificates.length > 0 ? (
-          <ul className="divide-y divide-gray-200">
-            {certificates.map((certificate) => (
-              <CertificateItem key={certificate.id} certificate={certificate} />
-            ))}
-          </ul>
-        ) : (
-          <p>Loading SSL certificates...</p>
-        )}
+        <h3 className="text-lg font-semibold mb-2">Active Certificates</h3>
+        {renderCertificateList(activeCertificates)}
+        <h3 className="text-lg font-semibold mb-2 mt-4">
+          Inactive Certificates
+        </h3>
+        {renderCertificateList(inactiveCertificates)}
       </div>
     </div>
+  );
+}
+
+function renderCertificateList(certificates) {
+  return certificates.length > 0 ? (
+    <ul className="divide-y divide-gray-200">
+      {certificates.map((certificate) => (
+        <CertificateItem key={certificate.id} certificate={certificate} />
+      ))}
+    </ul>
+  ) : (
+    <p>No certificates found.</p>
   );
 }
 
@@ -68,22 +47,41 @@ function CertificateItem({ certificate }: { certificate: SSLCertificate }) {
   const handleRevoke = (id: string) => {
     console.log('Revoke Certificate:', id);
   };
+
+  const daysUntilExpiry = dayjs(certificate.expiryDate).diff(dayjs(), 'day');
+  const isExpired = daysUntilExpiry < 0;
+  const isExpiringSoon = daysUntilExpiry >= 0 && daysUntilExpiry <= 30;
+
+  let itemStyle = 'py-3 flex justify-between items-center';
+  let expiryTextStyle = 'text-sm text-gray-500';
+  let expiryText = `Expires in ${daysUntilExpiry} days: ${certificate.expiryDate}`;
+
+  if (isExpired) {
+    itemStyle += ' bg-gray-200';
+    expiryTextStyle = 'text-sm text-red-500';
+    expiryText = `Expired ${Math.abs(daysUntilExpiry)} days ago on ${
+      certificate.expiryDate
+    }`;
+  } else if (isExpiringSoon) {
+    expiryTextStyle = 'text-sm text-red-500';
+  }
+
   return (
-    <li className="py-3 flex justify-between items-center">
+    <li className={itemStyle}>
       <div>
         <p className="text-sm font-medium text-gray-900">
-          {certificate.domainName}
+          {certificate.domain}
         </p>
         <p className="text-sm text-gray-500">
           Target Domain: {certificate.targetDomain}
         </p>
-        <p className="text-sm text-gray-500">Status: {certificate.status}</p>
         <p className="text-sm text-gray-500">
-          Issued: {certificate.issuedDate}
+          Certificate Status: {certificate.certificateStatus}
         </p>
         <p className="text-sm text-gray-500">
-          Expires: {certificate.expiryDate}
+          Proxy Status: {certificate.proxyStatus}
         </p>
+        <p className={expiryTextStyle}>{expiryText}</p>
       </div>
       <div className="flex space-x-4">
         <button
