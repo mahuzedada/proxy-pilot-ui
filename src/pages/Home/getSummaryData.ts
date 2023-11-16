@@ -14,7 +14,7 @@ export default function getSummaryData(data: SSLCertificate[]) {
       .sort((a, b) => dayjs(b.updatedAt).diff(dayjs(a.updatedAt)))
       .slice(0, 3),
     soonToExpire: activeCertificates.filter((item) =>
-      dayjs(item.expiryDate).isBefore(dayjs().add(30, 'day'))
+      dayjs(item.expiryDate).isBefore(dayjs().add(31, 'day'))
     ),
   };
 }
