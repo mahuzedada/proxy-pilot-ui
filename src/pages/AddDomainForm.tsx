@@ -1,17 +1,15 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import post from '../lib/post';
 import Button from '../components/utility/Button';
 import { useNavigate } from 'react-router-dom';
+import InputField from '../components/utility/InputField';
 
 export default function AddDomainForm() {
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const [error, setError] = React.useState<{
+  const form = useForm();
+  const { handleSubmit } = form;
+  const [apiError, setApiError] = React.useState<{
     message: string;
     statusCode: number;
   } | null>(null);
@@ -24,7 +22,7 @@ export default function AddDomainForm() {
       });
       console.log({ data, res });
     } catch (e) {
-      setError(e.response.data);
+      setApiError(e.response.data);
     }
   };
 
@@ -42,72 +40,50 @@ export default function AddDomainForm() {
 
   return (
     <div className="container mx-auto p-4">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-      >
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="domain"
-          >
-            Domain
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="domain"
-            type="text"
-            placeholder="Enter your domain"
-            {...register('domain', { required: true, validate: isValidDomain })}
-          />
-          {errors.domain && (
-            <p className="text-red-500">
-              {errors.domain.message || 'Domain is required'}
-            </p>
-          )}
-        </div>
+      <FormProvider {...form}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        >
+          <div className="mb-4">
+            <InputField
+              name="domain"
+              options={{
+                required: true,
+                validate: isValidDomain,
+              }}
+            />
+          </div>
 
-        <div className="mb-6">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="targetDomain"
-          >
-            Target Domain
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="targetDomain"
-            type="text"
-            placeholder="Enter the target domain"
-            {...register('targetDomain', {
-              required: true,
-              validate: isValidDomain,
-            })}
-          />
-          {errors.targetDomain && (
-            <p className="text-red-500">
-              {errors.targetDomain.message || 'Target Domain is required'}
-            </p>
-          )}
-        </div>
+          <div className="mb-6">
+            <InputField
+              name="targetDomain"
+              options={{
+                required: true,
+                validate: isValidDomain,
+              }}
+            />
+          </div>
 
-        <div className="flex items-center justify-left gap-3">
-          <Button onClick={() => navigate(-1)} variant="danger">
-            cancel
-          </Button>
-          <Button variant="neutral" type="submit">
-            Create SSL Certificate
-          </Button>
-        </div>
-      </form>
-      {error && (
+          <div className="flex items-center justify-left gap-3">
+            <Button onClick={() => navigate(-1)} variant="danger">
+              cancel
+            </Button>
+            <Button variant="neutral" type="submit">
+              Create SSL Certificate
+            </Button>
+          </div>
+        </form>
+      </FormProvider>
+
+      {apiError && (
         <div
           className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4"
           role="alert"
         >
           <p className="font-bold">Error</p>
-          <p>{error.message}</p>
-          {error.statusCode === 422 && (
+          <p>{apiError.message}</p>
+          {apiError.statusCode === 422 && (
             <div className="mt-4">
               <p className="font-bold">Resolution Steps:</p>
               <ol className="list-decimal ml-5">

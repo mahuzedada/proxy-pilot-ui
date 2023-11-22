@@ -1,7 +1,6 @@
-import useFormState from './useFormState';
-import Field from './components/Field';
 import Layout from './components/Layout';
-import Form from './components/Form';
+import { useForm, FormProvider } from 'react-hook-form';
+import InputField from '../../components/utility/InputField';
 
 type Props = {
   email: string;
@@ -9,36 +8,30 @@ type Props = {
 };
 
 export default function Account(props: Props) {
-  const { values, handleChange, isEdited, reset } = useFormState(props);
+  const defaultValues = props;
 
-  const handleAccountSettingsSubmit = (e: any) => {
-    e.preventDefault();
-    console.log('Account Settings:', values);
+  const form = useForm({ defaultValues });
+  const {
+    handleSubmit,
+    formState: { dirtyFields },
+    reset,
+  } = form;
+
+  const onSubmit = (data: any) => {
+    console.log('Account Settings:', data);
   };
 
   return (
     <Layout
       title="Account"
-      isEdited={isEdited}
+      isEdited={dirtyFields.email || dirtyFields.password}
       onCancel={reset}
-      onSave={handleAccountSettingsSubmit}
+      onSave={handleSubmit(onSubmit)}
     >
-      <Form onSubmit={handleAccountSettingsSubmit}>
-        <Field
-          label="Email"
-          type="email"
-          id="email"
-          value={values.email}
-          onChange={handleChange('email')}
-        />
-        <Field
-          label="Password"
-          type="password"
-          id="password"
-          value={values.password}
-          onChange={handleChange('password')}
-        />
-      </Form>
+      <FormProvider {...form}>
+        <InputField name="email" options={{ required: true }} />
+        <InputField name="password" options={{ required: true }} />
+      </FormProvider>
     </Layout>
   );
 }
