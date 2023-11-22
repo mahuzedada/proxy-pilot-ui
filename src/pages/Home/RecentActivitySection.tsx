@@ -11,7 +11,7 @@ function RecentActivitySection({ activities }: RecentActivitySectionProps) {
       {activities.length > 0 ? (
         <ul className="divide-y divide-gray-200">
           {activities.map((activity) => (
-            <ActivityItem key={activity.id} activity={activity} />
+            <ActivityItem key={activity.domain} activity={activity} />
           ))}
         </ul>
       ) : (

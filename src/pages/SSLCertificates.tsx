@@ -1,6 +1,8 @@
 import dayjs from 'dayjs';
 import { SSLCertificate } from '../models';
 import useCertificates from '../hooks/useCertificates';
+import patch from '../lib/patch';
+import deleteMethod from '../lib/deleteMethod';
 
 function SSLCertificates() {
   const certificates = useCertificates();
@@ -27,11 +29,11 @@ function SSLCertificates() {
   );
 }
 
-function renderCertificateList(certificates) {
+function renderCertificateList(certificates: SSLCertificate[]) {
   return certificates.length > 0 ? (
     <ul className="divide-y divide-gray-200">
       {certificates.map((certificate) => (
-        <CertificateItem key={certificate.id} certificate={certificate} />
+        <CertificateItem key={certificate.domain} certificate={certificate} />
       ))}
     </ul>
   ) : (
@@ -40,12 +42,12 @@ function renderCertificateList(certificates) {
 }
 
 function CertificateItem({ certificate }: { certificate: SSLCertificate }) {
-  const handleRenew = (id: string) => {
-    console.log('Renew Certificate:', id);
+  const handleRenew = async (domain: string) => {
+    await patch(`/${domain}/renew`);
   };
 
-  const handleRevoke = (id: string) => {
-    console.log('Revoke Certificate:', id);
+  const handleRevoke = async (domain: string) => {
+    await deleteMethod(`/${domain}`);
   };
 
   const daysUntilExpiry = dayjs(certificate.expiryDate).diff(dayjs(), 'day');
@@ -85,13 +87,13 @@ function CertificateItem({ certificate }: { certificate: SSLCertificate }) {
       </div>
       <div className="flex space-x-4">
         <button
-          onClick={() => handleRenew(certificate.id)}
+          onClick={() => handleRenew(certificate.domain)}
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded"
         >
           Renew
         </button>
         <button
-          onClick={() => handleRevoke(certificate.id)}
+          onClick={() => handleRevoke(certificate.domain)}
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded"
         >
           Revoke

@@ -1,8 +1,7 @@
 export interface SSLCertificate {
-  id: string;
+  domain: string;
   createdAt: string;
   updatedAt: string;
-  domain: string;
   certificateStatus: string;
   targetDomain: string;
   issuedDate: string;

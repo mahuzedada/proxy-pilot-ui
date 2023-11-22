@@ -1,18 +1,44 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import post from '../lib/post';
 
 export default function AddDomainForm() {
-  const [domain, setDomain] = useState('');
-  const [targetDomain, setTargetDomain] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const [error, setError] = React.useState<{
+    message: string;
+    statusCode: number;
+  } | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Domain:', domain, 'Target Domain:', targetDomain);
+  const onSubmit = async (data) => {
+    try {
+      const res = await post('', data);
+      console.log({ data, res });
+    } catch (e) {
+      setError(e.response.data);
+    }
+  };
+
+  const isValidDomain = (value) => {
+    // Check if the value starts with http:// or https://
+    if (/^(http:\/\/|https:\/\/)/.test(value)) {
+      return 'Please remove http:// or https:// from the domain';
+    }
+
+    // Regular expression to validate the domain format
+    const domainRegex =
+      /^(?!:\/\/)([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
+    return domainRegex.test(value) || 'Invalid domain format';
   };
 
   return (
     <div className="container mx-auto p-4">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
       >
         <div className="mb-4">
@@ -27,9 +53,13 @@ export default function AddDomainForm() {
             id="domain"
             type="text"
             placeholder="Enter your domain"
-            value={domain}
-            onChange={(e) => setDomain(e.target.value)}
+            {...register('domain', { required: true, validate: isValidDomain })}
           />
+          {errors.domain && (
+            <p className="text-red-500">
+              {errors.domain.message || 'Domain is required'}
+            </p>
+          )}
         </div>
 
         <div className="mb-6">
@@ -44,12 +74,24 @@ export default function AddDomainForm() {
             id="targetDomain"
             type="text"
             placeholder="Enter the target domain"
-            value={targetDomain}
-            onChange={(e) => setTargetDomain(e.target.value)}
+            {...register('targetDomain', {
+              required: true,
+              validate: isValidDomain,
+            })}
           />
+          {errors.targetDomain && (
+            <p className="text-red-500">
+              {errors.targetDomain.message || 'Target Domain is required'}
+            </p>
+          )}
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-left gap-3">
+          <Link to="/">
+            <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              cancel
+            </button>
+          </Link>
           <button
             className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
@@ -58,6 +100,42 @@ export default function AddDomainForm() {
           </button>
         </div>
       </form>
+      {error && (
+        <div
+          className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4"
+          role="alert"
+        >
+          <p className="font-bold">Error</p>
+          <p>{error.message}</p>
+          {error.statusCode === 422 && (
+            <div className="mt-4">
+              <p className="font-bold">Resolution Steps:</p>
+              <ol className="list-decimal ml-5">
+                <li>
+                  Access Your DNS Settings: Log in to your domain registrar's
+                  website or your DNS provider's control panel.
+                </li>
+                <li>
+                  Navigate to DNS Management: Look for the 'DNS Management',
+                  'Name Server Management', or similar section.
+                </li>
+                <li>
+                  Add an A Record: Choose 'A' as the record type, enter the IP
+                  address `18.191.75.83`, then set the TTL as recommended.
+                </li>
+                <li>
+                  Save the Changes: After entering the details, save the new A
+                  record.
+                </li>
+                <li>
+                  Wait for Propagation: DNS changes can take up to 48 hours to
+                  propagate worldwide.
+                </li>
+              </ol>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

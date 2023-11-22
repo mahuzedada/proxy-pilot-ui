@@ -13,7 +13,10 @@ function SSLExpiryAlertSection({ certificates }: SSLExpiryAlertSectionProps) {
       {certificates.length > 0 ? (
         <ul className="divide-y divide-gray-200">
           {certificates.map((certificate) => (
-            <CertificateItem key={certificate.id} certificate={certificate} />
+            <CertificateItem
+              key={certificate.domain}
+              certificate={certificate}
+            />
           ))}
         </ul>
       ) : (
