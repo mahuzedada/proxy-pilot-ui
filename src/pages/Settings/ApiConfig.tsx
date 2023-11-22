@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Button from '../../components/utility/Button';
 
 export default function ApiConfig() {
   const [apiKey, setApiKey] = useState('');
@@ -44,12 +45,7 @@ export default function ApiConfig() {
             value={apiKey}
             disabled
           />
-          <button
-            className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded"
-            onClick={regenerateApiKey}
-          >
-            Regenerate
-          </button>
+          <Button onClick={regenerateApiKey}>Regenerate</Button>
         </div>
       </div>
     </div>

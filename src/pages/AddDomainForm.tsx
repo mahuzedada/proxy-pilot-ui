@@ -1,9 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
 import post from '../lib/post';
+import Button from '../components/utility/Button';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddDomainForm() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -16,7 +18,10 @@ export default function AddDomainForm() {
 
   const onSubmit = async (data) => {
     try {
-      const res = await post('', data);
+      const res = await post('', {
+        ...data,
+        userId: '83396b1d-80fa-4b8d-a0a3-6292ac7683a9',
+      });
       console.log({ data, res });
     } catch (e) {
       setError(e.response.data);
@@ -87,17 +92,12 @@ export default function AddDomainForm() {
         </div>
 
         <div className="flex items-center justify-left gap-3">
-          <Link to="/">
-            <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-              cancel
-            </button>
-          </Link>
-          <button
-            className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
+          <Button onClick={() => navigate(-1)} variant="danger">
+            cancel
+          </Button>
+          <Button variant="neutral" type="submit">
             Create SSL Certificate
-          </button>
+          </Button>
         </div>
       </form>
       {error && (

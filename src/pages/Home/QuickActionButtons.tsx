@@ -1,28 +1,15 @@
 import { Link } from 'react-router-dom';
+import Button from '../../components/utility/Button';
 
-function QuickActionButtons() {
+export default function QuickActionButtons() {
   return (
     <div className="my-4 flex justify-center space-x-4">
       <Link to="/domain/new">
-        <ActionButton label="Add New Domain" />
+        <Button variant="neutral">Add New Domain</Button>
       </Link>
       <Link to="/domain/all">
-        <ActionButton label="View All Domains" />
+        <Button variant="neutral">View All Domains</Button>
       </Link>
     </div>
   );
 }
-
-interface ActionButtonProps {
-  label: string;
-}
-
-function ActionButton({ label }: ActionButtonProps) {
-  return (
-    <button className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded">
-      {label}
-    </button>
-  );
-}
-
-export default QuickActionButtons;

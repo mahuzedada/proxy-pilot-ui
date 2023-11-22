@@ -3,6 +3,8 @@ import { SSLCertificate } from '../models';
 import useCertificates from '../hooks/useCertificates';
 import patch from '../lib/patch';
 import deleteMethod from '../lib/deleteMethod';
+import Button from '../components/utility/Button';
+import { Link } from 'react-router-dom';
 
 function SSLCertificates() {
   const certificates = useCertificates();
@@ -16,7 +18,12 @@ function SSLCertificates() {
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-xl font-semibold mb-4">SSL Certificates</h2>
+      <div className="flex justify-between">
+        <h2 className="text-xl font-semibold mb-4">SSL Certificates</h2>
+        <Link to="/domain/new">
+          <Button variant="neutral">New domain</Button>
+        </Link>
+      </div>
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <h3 className="text-lg font-semibold mb-2">Active Certificates</h3>
         {renderCertificateList(activeCertificates)}
@@ -86,18 +93,18 @@ function CertificateItem({ certificate }: { certificate: SSLCertificate }) {
         <p className={expiryTextStyle}>{expiryText}</p>
       </div>
       <div className="flex space-x-4">
-        <button
+        <Button
+          variant="success"
           onClick={() => handleRenew(certificate.domain)}
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded"
         >
           Renew
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="danger"
           onClick={() => handleRevoke(certificate.domain)}
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded"
         >
-          Revoke
-        </button>
+          Renew
+        </Button>
       </div>{' '}
     </li>
   );

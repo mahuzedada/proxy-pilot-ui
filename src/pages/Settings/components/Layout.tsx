@@ -1,4 +1,5 @@
 import { MouseEventHandler, ReactNode } from 'react';
+import Button from '../../../components/utility/Button';
 
 type Props = {
   title: string;
@@ -20,20 +21,13 @@ export default function Layout({
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold">{title}</h3>
         {isEdited && (
-          <div>
-            <button
-              className="bg-gray-500 hover:bg-gray-700 text-white font-bold px-4 rounded mr-2"
-              onClick={onCancel}
-            >
+          <div className="flex gap-2">
+            <Button variant="danger" onClick={onCancel}>
               Cancel
-            </button>
-            <button
-              className="bg-slate-500 hover:bg-slate-700 text-white font-bold px-4 rounded"
-              type="submit"
-              onClick={onSave}
-            >
+            </Button>
+            <Button onClick={onSave} type="submit">
               Save
-            </button>
+            </Button>
           </div>
         )}
       </div>
