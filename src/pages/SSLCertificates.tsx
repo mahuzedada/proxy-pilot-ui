@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 import { SSLCertificate } from '../models';
 import useCertificates from '../hooks/useCertificates';
-import patch from '../lib/patch';
 import deleteMethod from '../lib/deleteMethod';
 import Button from '../components/utility/Button';
 import { Link } from 'react-router-dom';
@@ -49,10 +48,6 @@ function renderCertificateList(certificates: SSLCertificate[]) {
 }
 
 function CertificateItem({ certificate }: { certificate: SSLCertificate }) {
-  const handleRenew = async (domain: string) => {
-    await patch(`/${domain}/renew`);
-  };
-
   const handleRevoke = async (domain: string) => {
     await deleteMethod(`/${domain}`);
   };
@@ -92,20 +87,6 @@ function CertificateItem({ certificate }: { certificate: SSLCertificate }) {
         </p>
         <p className={expiryTextStyle}>{expiryText}</p>
       </div>
-      <div className="flex space-x-4">
-        <Button
-          variant="success"
-          onClick={() => handleRenew(certificate.domain)}
-        >
-          Renew
-        </Button>
-        <Button
-          variant="danger"
-          onClick={() => handleRevoke(certificate.domain)}
-        >
-          Renew
-        </Button>
-      </div>{' '}
     </li>
   );
 }
