@@ -4,14 +4,14 @@ import { Bars3Icon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
 
-export default function Navbar() {
+export default function TopNav() {
   return (
-    <div className="fixed top-0 left-0 w-full z-10 bg-slate-600 p-4">
+    <div className=" w-full z-10 bg-slate-600 dark:bg-slate-800 p-4">
       <div className="container mx-auto">
         {/* Desktop/Tablet */}
         <div className="hidden md:flex justify-between items-center">
           <Link to="/">
-            <img className="w-24" src={logo} />
+            <img className="w-24" src={logo} alt="logo" />
           </Link>
 
           <div className="space-x-4">
@@ -27,7 +27,7 @@ export default function Navbar() {
         {/* Mobile */}
         <div className="md:hidden flex justify-between items-center">
           <Link to="/" className="text-white font-bold text-xl">
-            <img className="w-24" src={logo} />
+            <img className="w-24" src={logo} alt="logo" />
           </Link>
           <Menu as="div" className="relative inline-block text-left">
             {({ open }) => (
@@ -47,7 +47,7 @@ export default function Navbar() {
                 >
                   <Menu.Items
                     static
-                    className="absolute right-0 mt-2 w-48 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
+                    className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-700 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
                   >
                     <div className="py-1">
                       <Menu.Item>
@@ -56,8 +56,8 @@ export default function Navbar() {
                             to="/domain/all"
                             className={`${
                               active
-                                ? 'bg-slate-600 text-white'
-                                : 'text-gray-900'
+                                ? 'bg-slate-600 dark:bg-slate-500 text-white'
+                                : 'text-gray-900 dark:text-white'
                             } block px-4 py-2 text-sm`}
                           >
                             Domains
@@ -70,8 +70,8 @@ export default function Navbar() {
                             to="/settings"
                             className={`${
                               active
-                                ? 'bg-slate-600 text-white'
-                                : 'text-gray-900'
+                                ? 'bg-slate-600 dark:bg-slate-500 text-white'
+                                : 'text-gray-900 dark:text-white'
                             } block px-4 py-2 text-sm`}
                           >
                             Settings

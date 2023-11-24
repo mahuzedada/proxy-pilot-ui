@@ -1,5 +1,5 @@
 import React from 'react';
-import formatFieldNameToLabel from './FIelds/formatFieldNameToLabel';
+import formatFieldNameToLabel from './Fields/formatFieldNameToLabel';
 import { Size, sizes } from './variationTypes';
 import { useFormContext, RegisterOptions } from 'react-hook-form';
 import FieldError from './FieldError';
@@ -22,15 +22,17 @@ export default function InputField({
   const labelText = label || formatFieldNameToLabel(name);
   const placeholderText = placeholder || `${labelText}...`;
 
-  const inputClassName = ` ${sizes[size]} shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline`;
+  // Update the inputClassName to support dark mode
+  const inputClassName = ` ${sizes[size]} shadow appearance-none border rounded w-full leading-tight focus:outline-none focus:shadow-outline text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500`;
+
+  // Update label class to support dark mode
+  const labelClassName =
+    'block text-sm font-bold md:flex-none md:w-1/3 mb-1 md:mb-0 mr-2 text-gray-700 dark:text-gray-300';
 
   return (
     <>
       <div className="flex flex-col md:flex-row md:items-center mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold md:flex-none md:w-1/3 mb-1 md:mb-0 mr-2"
-          htmlFor={name}
-        >
+        <label className={labelClassName} htmlFor={name}>
           {labelText}
         </label>
         <div className="flex-grow">

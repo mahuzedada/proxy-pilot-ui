@@ -18,15 +18,19 @@ function SSLCertificates() {
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-between">
-        <h2 className="text-xl font-semibold mb-4">SSL Certificates</h2>
+        <h2 className="text-xl font-semibold mb-4 dark:text-white">
+          SSL Certificates
+        </h2>
         <Link to="/domain/new">
           <Button variant="neutral">New domain</Button>
         </Link>
       </div>
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h3 className="text-lg font-semibold mb-2">Active Certificates</h3>
+      <div className="bg-white dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h3 className="text-lg font-semibold mb-2 dark:text-white">
+          Active Certificates
+        </h3>
         {renderCertificateList(activeCertificates)}
-        <h3 className="text-lg font-semibold mb-2 mt-4">
+        <h3 className="text-lg font-semibold mb-2 mt-4 dark:text-white">
           Inactive Certificates
         </h3>
         {renderCertificateList(inactiveCertificates)}
@@ -37,13 +41,13 @@ function SSLCertificates() {
 
 function renderCertificateList(certificates: SSLCertificate[]) {
   return certificates.length > 0 ? (
-    <ul className="divide-y divide-gray-200">
+    <ul className="divide-y divide-gray-200 dark:divide-gray-700">
       {certificates.map((certificate) => (
         <CertificateItem key={certificate.domain} certificate={certificate} />
       ))}
     </ul>
   ) : (
-    <p>No certificates found.</p>
+    <p className="dark:text-white">No certificates found.</p>
   );
 }
 
@@ -57,32 +61,32 @@ function CertificateItem({ certificate }: { certificate: SSLCertificate }) {
   const isExpiringSoon = daysUntilExpiry >= 0 && daysUntilExpiry <= 30;
 
   let itemStyle = 'py-3 flex justify-between items-center';
-  let expiryTextStyle = 'text-sm text-gray-500';
+  let expiryTextStyle = 'text-sm text-gray-500 dark:text-gray-300';
   let expiryText = `Expires in ${daysUntilExpiry} days: ${certificate.expiryDate}`;
 
   if (isExpired) {
-    itemStyle += ' bg-gray-200';
-    expiryTextStyle = 'text-sm text-red-500';
+    itemStyle += ' bg-gray-200 dark:bg-gray-600';
+    expiryTextStyle = 'text-sm text-red-500 dark:text-red-400';
     expiryText = `Expired ${Math.abs(daysUntilExpiry)} days ago on ${
       certificate.expiryDate
     }`;
   } else if (isExpiringSoon) {
-    expiryTextStyle = 'text-sm text-red-500';
+    expiryTextStyle = 'text-sm text-red-500 dark:text-red-400';
   }
 
   return (
     <li className={itemStyle}>
       <div>
-        <p className="text-sm font-medium text-gray-900">
+        <p className="text-sm font-medium text-gray-900 dark:text-white">
           {certificate.domain}
         </p>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-500 dark:text-gray-300">
           Target Domain: {certificate.targetDomain}
         </p>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-500 dark:text-gray-300">
           Certificate Status: {certificate.certificateStatus}
         </p>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-500 dark:text-gray-300">
           Proxy Status: {certificate.proxyStatus}
         </p>
         <p className={expiryTextStyle}>{expiryText}</p>

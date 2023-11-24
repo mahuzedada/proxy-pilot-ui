@@ -39,7 +39,7 @@ export default function AddDomainForm() {
       <FormProvider {...form}>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          className="bg-white dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4"
         >
           <div className="mb-4">
             <InputField
@@ -63,7 +63,7 @@ export default function AddDomainForm() {
 
           <div className="flex justify-end gap-3">
             <Button onClick={() => navigate(-1)} variant="danger">
-              cancel
+              Cancel
             </Button>
             <Button variant="neutral" type="submit">
               Create SSL Certificate

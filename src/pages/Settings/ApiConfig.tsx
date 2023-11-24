@@ -16,8 +16,10 @@ export default function ApiConfig() {
   };
   return (
     <FormProvider {...form}>
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8">
-        <h3 className="text-lg font-semibold mb-2">Integration Settings</h3>
+      <div className="bg-white dark:bg-gray-800 shadow-md dark:shadow-lg rounded px-8 pt-6 pb-8">
+        <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-white">
+          Integration Settings
+        </h3>
         <div className="mb-4">
           <div className="flex items-center md:items-start space-x-4">
             <div className="flex-1">

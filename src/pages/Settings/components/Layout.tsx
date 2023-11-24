@@ -17,9 +17,11 @@ export default function Layout({
   onSave,
 }: Props) {
   return (
-    <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div className="bg-white dark:bg-gray-800 shadow-md dark:shadow-lg rounded px-8 pt-6 pb-8 mb-4">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold">{title}</h3>
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+          {title}
+        </h3>
         {isEdited && (
           <div className="flex gap-2">
             <Button variant="danger" onClick={onCancel}>
