@@ -8,50 +8,63 @@ import { Link } from 'react-router-dom';
 function SSLCertificates() {
   const certificates = useCertificates();
 
-  const activeCertificates = certificates.filter(
-    (cert) => cert.certificateStatus === 'active'
-  );
-  const inactiveCertificates = certificates.filter(
-    (cert) => cert.certificateStatus !== 'active'
-  );
-
   return (
     <div className="container mx-auto p-4">
-      <div className="flex justify-between">
-        <h2 className="text-xl font-semibold mb-4 dark:text-white">
-          SSL Certificates
-        </h2>
-        <Link to="/domain/new">
-          <Button variant="neutral">New domain</Button>
-        </Link>
-      </div>
+      <h2 className="text-xl font-semibold mb-4 dark:text-white">
+        SSL Certificates
+      </h2>
       <div className="bg-white dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h3 className="text-lg font-semibold mb-2 dark:text-white">
-          Active Certificates
-        </h3>
-        {renderCertificateList(activeCertificates)}
-        <h3 className="text-lg font-semibold mb-2 mt-4 dark:text-white">
-          Inactive Certificates
-        </h3>
-        {renderCertificateList(inactiveCertificates)}
+        <div className="flex flex-col sm:flex-row justify-between mb-4">
+          <Link to="/domain/new">
+            <Button variant="blue">New domain</Button>
+          </Link>
+          <Button>Renew All Certificates</Button>
+        </div>
+        {renderCertificateTable(certificates)}
       </div>
     </div>
   );
 }
 
-function renderCertificateList(certificates: SSLCertificate[]) {
+function renderCertificateTable(certificates: SSLCertificate[]) {
   return certificates.length > 0 ? (
-    <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-      {certificates.map((certificate) => (
-        <CertificateItem key={certificate.domain} certificate={certificate} />
-      ))}
-    </ul>
+    <div className="overflow-x-auto">
+      <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead className="bg-gray-50 dark:bg-gray-700">
+          <tr>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-200 uppercase tracking-wider">
+              Domain
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-200 uppercase tracking-wider">
+              Target Domain
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-200 uppercase tracking-wider">
+              Status
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-200 uppercase tracking-wider">
+              Expiry Date
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-200 uppercase tracking-wider">
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+          {certificates.map((certificate) => (
+            <CertificateRow
+              key={certificate.domain}
+              certificate={certificate}
+            />
+          ))}
+        </tbody>
+      </table>
+    </div>
   ) : (
     <p className="dark:text-white">No certificates found.</p>
   );
 }
 
-function CertificateItem({ certificate }: { certificate: SSLCertificate }) {
+function CertificateRow({ certificate }: { certificate: SSLCertificate }) {
   const handleRevoke = async (domain: string) => {
     await deleteMethod(`/${domain}`);
   };
@@ -60,12 +73,10 @@ function CertificateItem({ certificate }: { certificate: SSLCertificate }) {
   const isExpired = daysUntilExpiry < 0;
   const isExpiringSoon = daysUntilExpiry >= 0 && daysUntilExpiry <= 30;
 
-  let itemStyle = 'py-3 flex justify-between items-center';
   let expiryTextStyle = 'text-sm text-gray-500 dark:text-gray-300';
   let expiryText = `Expires in ${daysUntilExpiry} days: ${certificate.expiryDate}`;
 
   if (isExpired) {
-    itemStyle += ' bg-gray-200 dark:bg-gray-600';
     expiryTextStyle = 'text-sm text-red-500 dark:text-red-400';
     expiryText = `Expired ${Math.abs(daysUntilExpiry)} days ago on ${
       certificate.expiryDate
@@ -75,23 +86,26 @@ function CertificateItem({ certificate }: { certificate: SSLCertificate }) {
   }
 
   return (
-    <li className={itemStyle}>
-      <div>
-        <p className="text-sm font-medium text-gray-900 dark:text-white">
-          {certificate.domain}
-        </p>
-        <p className="text-sm text-gray-500 dark:text-gray-300">
-          Target Domain: {certificate.targetDomain}
-        </p>
-        <p className="text-sm text-gray-500 dark:text-gray-300">
-          Certificate Status: {certificate.certificateStatus}
-        </p>
-        <p className="text-sm text-gray-500 dark:text-gray-300">
-          Proxy Status: {certificate.proxyStatus}
-        </p>
-        <p className={expiryTextStyle}>{expiryText}</p>
-      </div>
-    </li>
+    <tr>
+      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+        {certificate.domain}
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
+        {certificate.targetDomain}
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
+        <Button variant="success">ok</Button>
+      </td>
+      <td className={expiryTextStyle}>{expiryText}</td>
+      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+        <Button
+          onClick={() => handleRevoke(certificate.domain)}
+          variant="danger"
+        >
+          Revoke
+        </Button>
+      </td>
+    </tr>
   );
 }
 

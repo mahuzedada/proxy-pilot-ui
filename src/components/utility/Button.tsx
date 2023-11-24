@@ -1,5 +1,5 @@
 import React from 'react';
-import { buttonStyles, ButtonType, Size, sizes } from './variationTypes';
+import { getButtonStyle, ButtonType, Size, sizes } from './variationTypes';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonType;
@@ -14,7 +14,7 @@ export default function Button({
 }: Props) {
   const baseStyle =
     'text-white font-bold rounded focus:outline-none focus:shadow-outline';
-  const className = `${baseStyle} ${buttonStyles[variant]} ${sizes[size]}`;
+  const className = `${baseStyle} ${getButtonStyle(variant)} ${sizes[size]}`;
 
   return (
     <button className={className} {...props}>
