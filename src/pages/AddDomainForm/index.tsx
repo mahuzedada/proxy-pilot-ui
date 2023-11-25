@@ -7,6 +7,7 @@ import InputField from '../../components/utility/InputField';
 import Error from './Error';
 import isValidDomain from './isValidDomain';
 import JobStatus from './JobStatus';
+import PageSectionContainer from '../../components/PageSectionContainer';
 
 export type ApiError = {
   message: string;
@@ -35,42 +36,41 @@ export default function AddDomainForm() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <FormProvider {...form}>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="bg-white dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4"
-        >
-          <div className="mb-4">
-            <InputField
-              name="domain"
-              rules={{
-                required: true,
-                validate: isValidDomain,
-              }}
-            />
-          </div>
+    <>
+      <PageSectionContainer>
+        <FormProvider {...form}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="mb-4">
+              <InputField
+                name="domain"
+                rules={{
+                  required: true,
+                  validate: isValidDomain,
+                }}
+              />
+            </div>
 
-          <div className="mb-6">
-            <InputField
-              name="targetDomain"
-              rules={{
-                required: true,
-                validate: isValidDomain,
-              }}
-            />
-          </div>
+            <div className="mb-6">
+              <InputField
+                name="targetDomain"
+                rules={{
+                  required: true,
+                  validate: isValidDomain,
+                }}
+              />
+            </div>
 
-          <div className="flex justify-end gap-3">
-            <Button onClick={() => navigate(-1)} variant="danger">
-              Cancel
-            </Button>
-            <Button variant="neutral" type="submit">
-              Create SSL Certificate
-            </Button>
-          </div>
-        </form>
-      </FormProvider>
+            <div className="flex justify-end gap-3">
+              <Button onClick={() => navigate(-1)} variant="danger">
+                Cancel
+              </Button>
+              <Button variant="neutral" type="submit">
+                Create SSL Certificate
+              </Button>
+            </div>
+          </form>
+        </FormProvider>
+      </PageSectionContainer>
 
       {jobStarted && !apiError && (
         <JobStatus domain={form.getValues().domain} />
@@ -78,6 +78,6 @@ export default function AddDomainForm() {
       {apiError && (
         <Error message={apiError.message} statusCode={apiError.statusCode} />
       )}
-    </div>
+    </>
   );
 }

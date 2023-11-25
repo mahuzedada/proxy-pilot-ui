@@ -1,10 +1,12 @@
+import PageSectionContainer from '../../components/PageSectionContainer';
+
 export default function ApiInstructions() {
   const curlCommand = `curl -X GET 'https://api.proxypilot.com/' \\
     -H 'ApiKey: YOUR_API_KEY' \\
     -H 'AccountID: YOUR_ACCOUNT_ID'`;
 
   return (
-    <div className="p-4 bg-white dark:bg-gray-800 text-gray-800 dark:text-white shadow-md dark:shadow-lg rounded">
+    <PageSectionContainer>
       <h2 className="text-lg font-semibold mb-3">
         Accessing the ProxyPilot API
       </h2>
@@ -32,6 +34,6 @@ export default function ApiInstructions() {
         </a>
         .
       </p>
-    </div>
+    </PageSectionContainer>
   );
 }

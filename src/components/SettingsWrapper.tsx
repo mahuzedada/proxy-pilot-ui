@@ -1,5 +1,6 @@
 import { MouseEventHandler, ReactNode } from 'react';
 import Button from './utility/Button';
+import PageSectionContainer from './PageSectionContainer';
 
 type Props = {
   title: string;
@@ -17,7 +18,7 @@ export default function SettingsWrapper({
   onSave,
 }: Props) {
   return (
-    <div className="text-gray-800 dark:text-white bg-white dark:bg-gray-800 shadow-md dark:shadow-lg rounded px-8 pt-6 pb-8 mb-4">
+    <PageSectionContainer>
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold">{title}</h3>
         {isEdited && (
@@ -32,6 +33,6 @@ export default function SettingsWrapper({
         )}
       </div>
       {children}
-    </div>
+    </PageSectionContainer>
   );
 }

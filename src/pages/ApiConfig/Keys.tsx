@@ -1,6 +1,7 @@
 import Button from '../../components/utility/Button';
 import { useForm, FormProvider } from 'react-hook-form';
 import InputField from '../../components/utility/InputField';
+import PageSectionContainer from '../../components/PageSectionContainer';
 
 export default function Keys() {
   const form = useForm({
@@ -16,7 +17,7 @@ export default function Keys() {
   };
   return (
     <FormProvider {...form}>
-      <div className="bg-white dark:bg-gray-800 shadow-md dark:shadow-lg rounded px-8 pt-6 pb-8 mb-4">
+      <PageSectionContainer>
         <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-white">
           Integration Settings
         </h3>
@@ -36,7 +37,7 @@ export default function Keys() {
             <Button onClick={regenerateApiKey}>Regenerate</Button>
           </div>
         </div>
-      </div>
+      </PageSectionContainer>
     </FormProvider>
   );
 }
