@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 const navigationItems = [
   { name: 'Domains', href: '/domain/all' },
-  { name: 'Proxies', href: '/domain/all' },
+  { name: 'Proxies', href: '/proxy/all' },
   { name: 'Notifications', href: '/notifications' },
   { name: 'API', href: '/api-config' },
   { name: 'Billing', href: '/billing' },

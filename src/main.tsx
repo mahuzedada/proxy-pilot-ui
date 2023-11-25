@@ -6,10 +6,11 @@ import './index.css';
 import ErrorPage from './error-page';
 import Home from './pages/Home';
 import AddDomainForm from './pages/AddDomainForm';
-import SSLCertificates from './pages/SSLCertificates';
 import Preferences from './pages/Preferences';
 import ApiConfig from './pages/ApiConfig';
 import Billing from './pages/Billing';
+import DomainTracking from './pages/DomainTracking';
+import ProxyList from './pages/Proxy/ProxyList';
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/domain/all',
-        element: <SSLCertificates />,
+        element: <DomainTracking />,
+      },
+      {
+        path: '/proxy/all',
+        element: <ProxyList />,
       },
       {
         path: '/api-config',
