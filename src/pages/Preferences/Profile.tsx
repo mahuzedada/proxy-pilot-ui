@@ -1,4 +1,4 @@
-import Layout from './components/Layout';
+import SettingsWrapper from '../../components/SettingsWrapper';
 import { useForm, FormProvider } from 'react-hook-form';
 import InputField from '../../components/utility/InputField';
 
@@ -22,16 +22,16 @@ export default function Profile(props: Props) {
   };
 
   return (
-    <Layout
+    <SettingsWrapper
       title="Profile"
       isEdited={dirtyFields.firstName || dirtyFields.lastName}
       onCancel={reset}
       onSave={handleSubmit(onSubmit)}
     >
       <FormProvider {...form}>
-        <InputField name="firstName" options={{ required: true }} />
-        <InputField name="lastName" options={{ required: true }} />
+        <InputField name="firstName" rules={{ required: true }} />
+        <InputField name="lastName" rules={{ required: true }} />
       </FormProvider>
-    </Layout>
+    </SettingsWrapper>
   );
 }

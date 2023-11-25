@@ -1,7 +1,8 @@
-export type ButtonType = 'danger' | 'success' | 'neutral';
+export type ButtonType = 'primary' | 'danger' | 'success' | 'neutral';
 export type Size = 'sm' | 'md' | 'lg';
 
 const buttonStyles: Record<ButtonType, string> = {
+  primary: 'bg-indigo-500 hover:bg-indigo-700',
   danger: 'bg-red-500 hover:bg-red-700',
   success: 'bg-green-500 hover:bg-green-700',
   neutral: 'bg-slate-500 hover:bg-slate-700',

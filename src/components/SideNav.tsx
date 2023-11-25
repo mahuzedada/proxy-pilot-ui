@@ -3,11 +3,11 @@ import { NavLink } from 'react-router-dom';
 
 const navigationItems = [
   { name: 'Domains', href: '/domain/all' },
-  { name: 'Proxies', href: '/proxies' },
+  { name: 'Proxies', href: '/domain/all' },
   { name: 'Notifications', href: '/notifications' },
-  { name: 'API', href: '/settings' },
+  { name: 'API', href: '/api-config' },
   { name: 'Billing', href: '/billing' },
-  { name: 'Account', href: '/account' },
+  { name: 'Account Preferences', href: '/preferences' },
 ];
 
 export default function SideNav() {
@@ -19,7 +19,9 @@ export default function SideNav() {
             <NavLink
               to={item.href}
               className={({ isActive }) =>
-                isActive ? 'block p-4 bg-blue-900 text-white' : 'block p-4'
+                isActive
+                  ? 'block p-4 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white'
+                  : 'block p-4'
               }
             >
               {item.name}

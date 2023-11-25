@@ -7,7 +7,9 @@ import ErrorPage from './error-page';
 import Home from './pages/Home';
 import AddDomainForm from './pages/AddDomainForm';
 import SSLCertificates from './pages/SSLCertificates';
-import Settings from './pages/Settings';
+import Preferences from './pages/Preferences';
+import ApiConfig from './pages/ApiConfig';
+import Billing from './pages/Billing';
 
 const router = createBrowserRouter([
   {
@@ -28,8 +30,16 @@ const router = createBrowserRouter([
         element: <SSLCertificates />,
       },
       {
-        path: '/settings',
-        element: <Settings />,
+        path: '/api-config',
+        element: <ApiConfig />,
+      },
+      {
+        path: '/preferences',
+        element: <Preferences />,
+      },
+      {
+        path: '/billing',
+        element: <Billing />,
       },
     ],
   },

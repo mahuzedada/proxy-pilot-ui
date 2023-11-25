@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-type Theme = 'light' | 'dark' | 'default';
+export type Theme = 'light' | 'dark' | 'default';
 
 export default function useTheme(): [
   Theme,
@@ -28,7 +28,7 @@ export default function useTheme(): [
       setLight();
     } else {
       const prefersDarkScheme = window.matchMedia(
-        '(prefers-color-scheme: dark)',
+        '(prefers-color-scheme: dark)'
       ).matches;
       if (prefersDarkScheme) {
         setDark();

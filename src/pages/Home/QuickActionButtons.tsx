@@ -5,7 +5,7 @@ export default function QuickActionButtons() {
   return (
     <div className="my-4 flex justify-center space-x-4">
       <Link to="/domain/new">
-        <Button variant="neutral">Add New Domain</Button>
+        <Button variant="primary">Add New Domain</Button>
       </Link>
       <Link to="/domain/all">
         <Button variant="neutral">View All Domains</Button>

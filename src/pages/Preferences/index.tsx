@@ -1,14 +1,14 @@
 import Account from './Account';
-import ApiConfig from './ApiConfig';
+import Theme from './Theme';
 import Profile from './Profile';
 
-export default function Settings() {
+export default function Preferences() {
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-xl font-semibold mb-4">Settings</h2>
+      <h2 className="text-xl font-semibold mb-4">Preferences</h2>
       <Account email="chatis@mail.com" password="alibababa" />
       <Profile firstName="Chatis" lastName="Santos" />
-      <ApiConfig />
+      <Theme />
     </div>
   );
 }

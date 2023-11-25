@@ -1,4 +1,4 @@
-import Layout from './components/Layout';
+import SettingsWrapper from '../../components/SettingsWrapper';
 import { useForm, FormProvider } from 'react-hook-form';
 import InputField from '../../components/utility/InputField';
 
@@ -22,16 +22,16 @@ export default function Account(props: Props) {
   };
 
   return (
-    <Layout
+    <SettingsWrapper
       title="Account"
       isEdited={dirtyFields.email || dirtyFields.password}
       onCancel={reset}
       onSave={handleSubmit(onSubmit)}
     >
       <FormProvider {...form}>
-        <InputField name="email" options={{ required: true }} />
-        <InputField name="password" options={{ required: true }} />
+        <InputField name="email" rules={{ required: true }} />
+        <InputField name="password" rules={{ required: true }} />
       </FormProvider>
-    </Layout>
+    </SettingsWrapper>
   );
 }

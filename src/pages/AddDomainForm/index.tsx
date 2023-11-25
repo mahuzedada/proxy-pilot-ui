@@ -44,7 +44,7 @@ export default function AddDomainForm() {
           <div className="mb-4">
             <InputField
               name="domain"
-              options={{
+              rules={{
                 required: true,
                 validate: isValidDomain,
               }}
@@ -54,7 +54,7 @@ export default function AddDomainForm() {
           <div className="mb-6">
             <InputField
               name="targetDomain"
-              options={{
+              rules={{
                 required: true,
                 validate: isValidDomain,
               }}

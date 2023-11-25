@@ -4,6 +4,7 @@ import useCertificates from '../hooks/useCertificates';
 import deleteMethod from '../lib/deleteMethod';
 import Button from '../components/utility/Button';
 import { Link } from 'react-router-dom';
+import PageSectionContainer from '../components/PageSectionContainer';
 
 function SSLCertificates() {
   const certificates = useCertificates();
@@ -13,15 +14,15 @@ function SSLCertificates() {
       <h2 className="text-xl font-semibold mb-4 dark:text-white">
         SSL Certificates
       </h2>
-      <div className="bg-white dark:bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <PageSectionContainer>
         <div className="flex flex-col sm:flex-row justify-between mb-4">
           <Link to="/domain/new">
-            <Button variant="blue">New domain</Button>
+            <Button variant="primary">New domain</Button>
           </Link>
-          <Button>Renew All Certificates</Button>
+          <Button>Check All Certificates</Button>
         </div>
         {renderCertificateTable(certificates)}
-      </div>
+      </PageSectionContainer>
     </div>
   );
 }

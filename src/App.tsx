@@ -1,8 +1,10 @@
 import { Outlet } from 'react-router-dom';
 import TopNav from './components/TopNav';
 import SideNav from './components/SideNav';
+import useTheme from './hooks/useTheme';
 
 export default function App() {
+  useTheme();
   return (
     <div className="flex flex-col min-h-screen overflow-y-scroll">
       <TopNav />
