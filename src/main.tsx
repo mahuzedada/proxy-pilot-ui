@@ -11,6 +11,7 @@ import ApiConfig from './pages/ApiConfig';
 import Billing from './pages/Billing';
 import DomainTracking from './pages/DomainTracking';
 import ProxyList from './pages/Proxy/ProxyList';
+import Notifications from './pages/Notifications';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: '/billing',
         element: <Billing />,
+      },
+      {
+        path: '/notifications',
+        element: <Notifications />,
       },
     ],
   },
