@@ -1,18 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-
-const navigationItems = [
-  { name: 'Domains', href: '/domain/all' },
-  { name: 'Proxies', href: '/proxy/all' },
-  { name: 'Notifications', href: '/notifications' },
-  { name: 'API', href: '/api-config' },
-  { name: 'Billing', href: '/billing' },
-  { name: 'Account Preferences', href: '/preferences' },
-];
+import navigationItems from './navigationItems';
 
 export default function SideNav() {
   return (
-    <aside className="w-64 bg-white dark:bg-gray-800 text-gray-800 dark:text-white">
+    <aside className="hidden md:block w-64 bg-white dark:bg-gray-800 text-gray-800 dark:text-white">
       <ul>
         {navigationItems.map((item) => (
           <li key={item.name}>

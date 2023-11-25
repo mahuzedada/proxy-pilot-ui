@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import TopNav from './components/TopNav';
-import SideNav from './components/SideNav';
+import TopNav from './components/navigation/TopNav';
+import SideNav from './components/navigation/SideNav';
 import useTheme from './hooks/useTheme';
 
 export default function App() {

@@ -30,7 +30,7 @@ function CertificateItem({ certificate }: { certificate: SSLCertificate }) {
   return (
     <li className="py-3 flex justify-between items-center">
       <div>
-        <p className="text-sm font-medium text-gray-900">
+        <p className="text-sm font-medium text-gray-900 dark:text-white">
           {certificate.domain}
         </p>
         <p className="text-sm text-red-500">

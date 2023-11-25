@@ -2,7 +2,8 @@ import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { Bars3Icon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
-import logo from '../assets/logo.png';
+import logo from '../../assets/logo.png';
+import navigationItems from './navigationItems';
 
 export default function TopNav() {
   return (
@@ -13,15 +14,6 @@ export default function TopNav() {
           <Link to="/">
             <img className="w-24" src={logo} alt="logo" />
           </Link>
-
-          <div className="space-x-4">
-            <Link to="/domain/all">
-              <span className="text-white">Domains</span>
-            </Link>
-            <Link to="/settings">
-              <span className="text-white">Settings</span>
-            </Link>
-          </div>
         </div>
 
         {/* Mobile */}
@@ -50,34 +42,22 @@ export default function TopNav() {
                     className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-700 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
                   >
                     <div className="py-1">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="/domain/all"
-                            className={`${
-                              active
-                                ? 'bg-slate-600 dark:bg-slate-500 text-white'
-                                : 'text-gray-900 dark:text-white'
-                            } block px-4 py-2 text-sm`}
-                          >
-                            Domains
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="/settings"
-                            className={`${
-                              active
-                                ? 'bg-slate-600 dark:bg-slate-500 text-white'
-                                : 'text-gray-900 dark:text-white'
-                            } block px-4 py-2 text-sm`}
-                          >
-                            Settings
-                          </Link>
-                        )}
-                      </Menu.Item>
+                      {navigationItems.map((link) => (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to={link.href}
+                              className={`${
+                                active
+                                  ? 'bg-slate-600 dark:bg-slate-500 text-white'
+                                  : 'text-gray-900 dark:text-white'
+                              } block px-4 py-2 text-sm`}
+                            >
+                              {link.name}
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      ))}
                     </div>
                   </Menu.Items>
                 </Transition>
