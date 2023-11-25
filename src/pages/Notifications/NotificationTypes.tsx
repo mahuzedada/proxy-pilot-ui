@@ -3,7 +3,9 @@ import SettingsWrapper from '../../components/SettingsWrapper';
 import { useForm, FormProvider } from 'react-hook-form';
 
 export default function NotificationTypes() {
-  const form = useForm();
+  const form = useForm({
+    defaultValues: { expiry: true, change: true },
+  });
   const {
     handleSubmit,
     formState: { dirtyFields },
