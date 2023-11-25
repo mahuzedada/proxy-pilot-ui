@@ -1,6 +1,6 @@
 import SettingsWrapper from '../../components/SettingsWrapper';
 import { useForm, FormProvider } from 'react-hook-form';
-import InputField from '../../components/utility/InputField';
+import InputField from '../../components/utility/Fields/InputField';
 
 type Props = {
   email: string;

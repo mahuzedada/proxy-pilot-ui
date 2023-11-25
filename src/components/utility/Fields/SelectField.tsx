@@ -2,9 +2,9 @@ import React, { Fragment } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { RegisterOptions, useController } from 'react-hook-form';
-import { Size } from './variationTypes';
-import formatFieldNameToLabel from './FIelds/formatFieldNameToLabel';
-import getUniqueId from '../../getUniqueId';
+import { Size } from '../variationTypes';
+import formatFieldNameToLabel from './formatFieldNameToLabel';
+import getUniqueId from '../../../getUniqueId';
 
 type Props = {
   name: string;

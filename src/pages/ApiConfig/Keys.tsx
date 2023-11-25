@@ -1,6 +1,6 @@
 import Button from '../../components/utility/Button';
 import { useForm, FormProvider } from 'react-hook-form';
-import InputField from '../../components/utility/InputField';
+import InputField from '../../components/utility/Fields/InputField';
 import PageSectionContainer from '../../components/PageSectionContainer';
 
 export default function Keys() {

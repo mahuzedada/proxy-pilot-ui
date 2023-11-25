@@ -3,7 +3,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import post from '../../lib/post';
 import Button from '../../components/utility/Button';
 import { useNavigate } from 'react-router-dom';
-import InputField from '../../components/utility/InputField';
+import InputField from '../../components/utility/Fields/InputField';
 import Error from './Error';
 import isValidDomain from './isValidDomain';
 import JobStatus from './JobStatus';

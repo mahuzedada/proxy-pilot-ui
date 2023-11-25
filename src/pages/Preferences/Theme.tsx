@@ -1,6 +1,6 @@
 import SettingsWrapper from '../../components/SettingsWrapper';
 import { useForm, FormProvider } from 'react-hook-form';
-import SelectField from '../../components/utility/SelectField';
+import SelectField from '../../components/utility/Fields/SelectField';
 import useTheme from '../../hooks/useTheme';
 
 const options = {

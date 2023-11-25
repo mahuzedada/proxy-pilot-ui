@@ -1,6 +1,6 @@
 import React from 'react';
-import formatFieldNameToLabel from './Fields/formatFieldNameToLabel';
-import { Size, sizes } from './variationTypes';
+import formatFieldNameToLabel from './formatFieldNameToLabel';
+import { Size, sizes } from '../variationTypes';
 import { useFormContext, RegisterOptions } from 'react-hook-form';
 import FieldError from './FieldError';
 
