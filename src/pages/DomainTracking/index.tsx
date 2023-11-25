@@ -200,7 +200,7 @@ export default function DomainTracking() {
       <PageSectionContainer>
         <div className="flex flex-col sm:flex-row justify-between mb-4">
           <Link to="/domain/new">
-            <Button variant="primary">Tack ew domain</Button>
+            <Button variant="primary">Tack new domain</Button>
           </Link>
           <Button>Check All Domains</Button>
         </div>

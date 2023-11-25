@@ -3,19 +3,17 @@ import PageSectionContainer from '../../components/PageSectionContainer';
 import Button from '../../components/utility/Button';
 import { Link } from 'react-router-dom';
 import ProxyRow from './ProxyRow';
+import PageContainer from '../../components/PageContainer';
 
 export default function ProxyList() {
   const certificates = useCertificates();
 
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-xl font-semibold mb-4 dark:text-white">
-        SSL Certificates
-      </h2>
+    <PageContainer title="Proxies">
       <PageSectionContainer>
         <div className="flex flex-col sm:flex-row justify-between mb-4">
           <Link to="/domain/new">
-            <Button variant="primary">New domain</Button>
+            <Button variant="primary">New proxy</Button>
           </Link>
           <Button>Check All Certificates</Button>
         </div>
@@ -55,6 +53,6 @@ export default function ProxyList() {
           <p className="dark:text-white">No certificates found.</p>
         )}{' '}
       </PageSectionContainer>
-    </div>
+    </PageContainer>
   );
 }

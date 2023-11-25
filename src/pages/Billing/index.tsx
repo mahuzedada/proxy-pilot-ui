@@ -1,10 +1,10 @@
 import PlansAndPricing from './PlansAndPricing';
+import PageContainer from '../../components/PageContainer';
 
 export default function Billing() {
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-xl font-semibold mb-4">Billing</h2>
+    <PageContainer title="Billing">
       <PlansAndPricing />
-    </div>
+    </PageContainer>
   );
 }
