@@ -4,6 +4,7 @@ import { Bars3Icon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import navigationItems from './navigationItems';
+import getUniqueId from '../../getUniqueId';
 
 export default function TopNav() {
   return (
@@ -43,7 +44,7 @@ export default function TopNav() {
                   >
                     <div className="py-1">
                       {navigationItems.map((link) => (
-                        <Menu.Item>
+                        <Menu.Item key={getUniqueId()}>
                           {({ active }) => (
                             <Link
                               to={link.href}

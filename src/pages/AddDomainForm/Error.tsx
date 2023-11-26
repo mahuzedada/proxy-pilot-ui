@@ -1,5 +1,4 @@
 import { ApiError } from './index';
-import React from 'react';
 
 export default function Error({ message, statusCode }: ApiError) {
   return (

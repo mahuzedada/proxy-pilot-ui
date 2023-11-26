@@ -12,11 +12,20 @@ import Billing from './pages/Billing';
 import DomainTracking from './pages/DomainTracking';
 import ProxyList from './pages/Proxy/ProxyList';
 import Notifications from './pages/Notifications';
+import AuthProvider from './components/auth/AuthProvider';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+import Login from './components/auth/Login';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: (
+      <AuthProvider>
+        <ProtectedRoute>
+          <App />
+        </ProtectedRoute>
+      </AuthProvider>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
@@ -52,6 +61,14 @@ const router = createBrowserRouter([
         element: <Notifications />,
       },
     ],
+  },
+  {
+    path: '/login',
+    element: (
+      <AuthProvider>
+        <Login />
+      </AuthProvider>
+    ),
   },
 ]);
 

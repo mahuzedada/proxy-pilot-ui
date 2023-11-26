@@ -22,7 +22,7 @@ export default function Theme() {
     reset,
   } = form;
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: { theme: string }) => {
     setTheme(options[data.theme]);
     reset(data);
   };

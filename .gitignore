@@ -10,6 +10,9 @@ lerna-debug.log*
 # coverage
 coverage
 
+# environment
+.env
+
 node_modules
 dist
 dist-ssr

@@ -9,11 +9,7 @@ type Props = {
   defaultValue?: boolean;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
-export default function ToggleField({
-  name,
-  label,
-  defaultValue = false,
-}: Props) {
+export default function ToggleField({ name, label, defaultValue }: Props) {
   const { field } = useController({
     name,
     defaultValue,

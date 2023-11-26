@@ -1,5 +1,5 @@
 import { FieldErrors, useFormContext } from 'react-hook-form';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import formatFieldNameToLabel from './formatFieldNameToLabel';
 
 function getErrorMessage(
