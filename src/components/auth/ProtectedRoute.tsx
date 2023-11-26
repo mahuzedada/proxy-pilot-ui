@@ -7,8 +7,8 @@ type Props = {
 };
 
 export default function ProtectedRoute({ children }: Props) {
-  const { user } = useAuth();
-  if (!user) {
+  const { session } = useAuth();
+  if (!session) {
     return <Navigate to="/login" />;
   }
 

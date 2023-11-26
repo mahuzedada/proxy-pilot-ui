@@ -15,6 +15,9 @@ import Notifications from './pages/Notifications';
 import AuthProvider from './components/auth/AuthProvider';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import Login from './components/auth/Login';
+import NewPasswordForm from './components/auth/NewPasswordForm';
+import AuthCallback from './components/auth/AuthCallback';
+import ResetPassword from './components/auth/ResetPassword';
 
 const router = createBrowserRouter([
   {
@@ -67,6 +70,38 @@ const router = createBrowserRouter([
     element: (
       <AuthProvider>
         <Login />
+      </AuthProvider>
+    ),
+  },
+  {
+    path: '/new-password',
+    element: (
+      <AuthProvider>
+        <NewPasswordForm />
+      </AuthProvider>
+    ),
+  },
+  {
+    path: '/auth-callback',
+    element: (
+      <AuthProvider>
+        <AuthCallback />
+      </AuthProvider>
+    ),
+  },
+  {
+    path: '/new-password',
+    element: (
+      <AuthProvider>
+        <NewPasswordForm />
+      </AuthProvider>
+    ),
+  },
+  {
+    path: '/reset-password',
+    element: (
+      <AuthProvider>
+        <ResetPassword />
       </AuthProvider>
     ),
   },

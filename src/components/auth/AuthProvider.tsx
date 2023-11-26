@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode } from 'react';
+import { createContext, useState, ReactNode, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -6,19 +6,16 @@ const supabase = createClient(
   import.meta.env.VITE_SUPABASE_KEY
 );
 
-interface AuthUser {
-  firstName: string;
-  lastName: string;
-  email: string;
-}
-
 interface LoginInfo {
   email: string;
   password: string;
 }
 
 interface AuthContextType {
-  user: AuthUser | null;
+  session: any | null;
+  authErrorMessage: string | null;
+  updatePassword: (password: string) => void;
+  resetPasswordForEmail: (email: string) => void;
   login: (user: LoginInfo) => void;
   logout: () => void;
 }
@@ -26,23 +23,59 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType>(null!);
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<AuthUser | null>(null);
+  const [session, setSession] = useState<any | null>(null);
+  const [authErrorMessage, setAuthErrorMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('session1: ', session);
+      setSession(session);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      console.log('session2: ', session);
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const login = async (userInfo: LoginInfo) => {
-    const { data, error } = await supabase.auth.signInWithPassword(userInfo);
+    const { error } = await supabase.auth.signInWithPassword(userInfo);
     if (error) {
-      console.log({ error });
+      setAuthErrorMessage(error.message);
       return;
     }
-    setUser(data);
   };
 
-  const logout = () => {
-    setUser(null);
+  const updatePassword = async (password: string) => {
+    await supabase.auth.updateUser({ password });
+  };
+
+  const resetPasswordForEmail = async (email: string) => {
+    await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'http://localhost:5173/auth-callback?next=/new-password',
+    });
+  };
+
+  const logout = async () => {
+    await supabase.auth.signOut();
+    setSession(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        session,
+        login,
+        logout,
+        updatePassword,
+        authErrorMessage,
+        resetPasswordForEmail,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
