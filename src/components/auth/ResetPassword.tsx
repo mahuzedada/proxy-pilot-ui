@@ -5,6 +5,7 @@ import Button from '../utility/Button';
 import useAuth from '../../hooks/useAuth';
 import { useState } from 'react';
 import PasswordResetEmailConfirmation from './PasswordResetEmailConfirmation';
+import validateEmail from '../../utility/validateEmail';
 
 export default function ResetPassword() {
   const [emailSent, setEmailSent] = useState(false);
@@ -38,7 +39,7 @@ export default function ResetPassword() {
             size="md"
             name="email"
             hideLabel
-            rules={{ required: true }}
+            rules={{ required: true, validate: validateEmail }}
           />
           <Button
             variant="primary"

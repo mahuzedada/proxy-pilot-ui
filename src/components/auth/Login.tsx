@@ -4,6 +4,7 @@ import InputField from '../utility/Fields/InputField';
 import Button from '../utility/Button';
 import useAuth from '../../hooks/useAuth';
 import { Navigate, useNavigate } from 'react-router-dom';
+import validateEmail from '../../utility/validateEmail';
 
 export default function Login() {
   useTheme();
@@ -38,7 +39,7 @@ export default function Login() {
             size="md"
             name="email"
             hideLabel
-            rules={{ required: true }}
+            rules={{ required: true, validate: validateEmail }}
           />
           <InputField
             type="password"
