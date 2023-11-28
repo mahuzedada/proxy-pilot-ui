@@ -18,7 +18,7 @@ interface AuthContextType {
   resetPasswordForEmail: (email: string) => void;
   login: (user: LoginInfo) => void;
   signup: (user: LoginInfo) => Promise<false | any>;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType>(null!);

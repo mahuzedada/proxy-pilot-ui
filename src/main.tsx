@@ -20,6 +20,7 @@ import AuthCallback from './components/auth/AuthCallback';
 import ResetPassword from './components/auth/ResetPassword';
 import Signup from './components/auth/Signup';
 import EmailVerificationNotice from './components/auth/EmailVerificationNotice';
+import Signout from './components/auth/Signout';
 
 const router = createBrowserRouter([
   {
@@ -88,6 +89,14 @@ const router = createBrowserRouter([
     element: (
       <AuthProvider>
         <Signup />
+      </AuthProvider>
+    ),
+  },
+  {
+    path: '/signout',
+    element: (
+      <AuthProvider>
+        <Signout />
       </AuthProvider>
     ),
   },
