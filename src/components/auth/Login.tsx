@@ -3,12 +3,16 @@ import { useForm, FormProvider } from 'react-hook-form';
 import InputField from '../utility/Fields/InputField';
 import Button from '../utility/Button';
 import useAuth from '../../hooks/useAuth';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation } from 'react-router-dom';
 import validateEmail from '../../utility/validateEmail';
 
 export default function Login() {
   useTheme();
-  const navigate = useNavigate();
+
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const path = params.get('path');
+
   const { login, session, authErrorMessage } = useAuth();
   const form = useForm();
   const { handleSubmit } = form;
@@ -18,7 +22,7 @@ export default function Login() {
   };
 
   if (session) {
-    return <Navigate to="/" />;
+    return <Navigate to={path || '/'} />;
   }
 
   return (
@@ -43,11 +47,8 @@ export default function Login() {
               rules={{ required: true, validate: validateEmail }}
             />
             <div className="text-right">
-              <div
-                className="text-xs text-gray-700 dark:text-gray-300 cursor-pointer underline mb-2"
-                onClick={() => navigate('/reset-password')}
-              >
-                Forgot Password?
+              <div className="text-xs text-gray-700 dark:text-gray-300 underline mb-2">
+                <Link to="/reset-password">Forgot Password?</Link>
               </div>
               <InputField
                 type="password"
