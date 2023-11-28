@@ -3,31 +3,29 @@ import { useForm, FormProvider } from 'react-hook-form';
 import InputField from '../utility/Fields/InputField';
 import Button from '../utility/Button';
 import useAuth from '../../hooks/useAuth';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import validateEmail from '../../utility/validateEmail';
 
-export default function Login() {
+export default function Signup() {
   useTheme();
-  const navigate = useNavigate();
-  const { login, session, authErrorMessage } = useAuth();
+  const { signup, authErrorMessage } = useAuth();
   const form = useForm();
   const { handleSubmit } = form;
 
   const onSubmit = (data: { email: string; password: string }) => {
-    login(data);
+    signup(data);
   };
-
-  if (session) {
-    return <Navigate to="/" />;
-  }
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100 dark:bg-gray-800">
       <div className="max-w-sm w-full bg-white dark:bg-gray-700 rounded-lg shadow-md p-8">
         <h2 className="text-2xl text-center text-gray-700 dark:text-gray-300">
-          Sign in to ProxyPilot
+          Get started with ProxyPilot
         </h2>
-        <p className="text-center text-gray-500 dark:text-gray-400 mb-6">
+        <p className="text-center text-gray-500 dark:text-gray-400">
+          Create a new account.
+        </p>
+        <p className="text-center text-xs text-gray-400 dark:text-gray-500 mb-6">
           Manage your SSL certificates and reverse proxies with ease.
         </p>
         {authErrorMessage && (
@@ -39,38 +37,31 @@ export default function Login() {
               type="email"
               size="md"
               name="email"
+              placeholder="you@example.com"
               hideLabel
               rules={{ required: true, validate: validateEmail }}
             />
-            <div className="text-right">
-              <div
-                className="text-xs text-gray-700 dark:text-gray-300 cursor-pointer underline mb-2"
-                onClick={() => navigate('/reset-password')}
-              >
-                Forgot Password?
-              </div>
-              <InputField
-                type="password"
-                size="md"
-                name="password"
-                hideLabel
-                rules={{ required: true }}
-              />
-            </div>
+            <InputField
+              type="password"
+              size="md"
+              name="password"
+              hideLabel
+              rules={{ required: true }}
+            />
             <Button
               variant="primary"
               width="full"
               onClick={handleSubmit(onSubmit)}
             >
-              Sign In
+              Sign Up
             </Button>
             <div className="text-gray-500 dark:text-gray-400 text-center">
-              Don't have an account?{' '}
+              Have an account?{' '}
               <Link
-                to="/signup"
+                to="/login"
                 className="text-gray-700 dark:text-gray-200 underline"
               >
-                Sign Up Now
+                Sign In Now
               </Link>
             </div>
           </div>

@@ -18,6 +18,7 @@ import Login from './components/auth/Login';
 import NewPasswordForm from './components/auth/NewPasswordForm';
 import AuthCallback from './components/auth/AuthCallback';
 import ResetPassword from './components/auth/ResetPassword';
+import Signup from './components/auth/Signup';
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,22 @@ const router = createBrowserRouter([
     element: (
       <AuthProvider>
         <Login />
+      </AuthProvider>
+    ),
+  },
+  {
+    path: '/login',
+    element: (
+      <AuthProvider>
+        <Login />
+      </AuthProvider>
+    ),
+  },
+  {
+    path: '/signup',
+    element: (
+      <AuthProvider>
+        <Signup />
       </AuthProvider>
     ),
   },
