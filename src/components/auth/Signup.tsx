@@ -3,17 +3,21 @@ import { useForm, FormProvider } from 'react-hook-form';
 import InputField from '../utility/Fields/InputField';
 import Button from '../utility/Button';
 import useAuth from '../../hooks/useAuth';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import validateEmail from '../../utility/validateEmail';
 
 export default function Signup() {
   useTheme();
+  const navigate = useNavigate();
   const { signup, authErrorMessage } = useAuth();
   const form = useForm();
   const { handleSubmit } = form;
 
-  const onSubmit = (data: { email: string; password: string }) => {
-    signup(data);
+  const onSubmit = async (data: { email: string; password: string }) => {
+    const result = await signup(data);
+    if (result) {
+      navigate('/email-verification-notice');
+    }
   };
 
   return (

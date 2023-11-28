@@ -19,6 +19,7 @@ import NewPasswordForm from './components/auth/NewPasswordForm';
 import AuthCallback from './components/auth/AuthCallback';
 import ResetPassword from './components/auth/ResetPassword';
 import Signup from './components/auth/Signup';
+import EmailVerificationNotice from './components/auth/EmailVerificationNotice';
 
 const router = createBrowserRouter([
   {
@@ -121,6 +122,10 @@ const router = createBrowserRouter([
         <ResetPassword />
       </AuthProvider>
     ),
+  },
+  {
+    path: '/email-verification-notice',
+    element: <EmailVerificationNotice />,
   },
 ]);
 

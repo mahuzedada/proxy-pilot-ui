@@ -17,7 +17,7 @@ interface AuthContextType {
   updatePassword: (password: string) => void;
   resetPasswordForEmail: (email: string) => void;
   login: (user: LoginInfo) => void;
-  signup: (user: LoginInfo) => void;
+  signup: (user: LoginInfo) => Promise<false | any>;
   logout: () => void;
 }
 
@@ -52,7 +52,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signup = async (userInfo: LoginInfo) => {
-    const { error } = await supabase.auth.signUp({
+    const { error, data } = await supabase.auth.signUp({
       ...userInfo,
       options: {
         emailRedirectTo: 'http//localhost:5173/preferences',
@@ -60,8 +60,9 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     });
     if (error) {
       setAuthErrorMessage(error.message);
-      return;
+      return false;
     }
+    return data;
   };
 
   const updatePassword = async (password: string) => {
